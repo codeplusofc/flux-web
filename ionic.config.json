@@ -1,0 +1,7 @@
+{
+  "name": "fluxapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
