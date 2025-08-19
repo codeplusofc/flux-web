@@ -1,0 +1,53 @@
+<ion-content [fullscreen]="true" class="register-content">
+
+  <div class="register-box">
+    <img src="assets/logo.png" alt="Logo" class="logo" />
+
+    <h2>Criar nova conta</h2>
+    <p>É rápido e fácil, preencha os campos abaixo e faça seu pedido!</p>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+
+      <ion-item>
+        <ion-input formControlName="name" placeholder="Nome completo" autocomplete="name"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid">
+        Nome é obrigatório
+      </ion-text>
+
+      <ion-item>
+        <ion-input type="email" formControlName="email" placeholder="E-mail" autocomplete="email"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+        E-mail inválido
+      </ion-text>
+
+      <ion-item>
+        <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Senha" autocomplete="new-password"></ion-input>
+        <ion-button fill="clear" size="small" slot="end" (click)="togglePassword()">
+          {{ showPassword ? 'Ocultar' : 'Mostrar' }}
+        </ion-button>
+      </ion-item>
+      <ion-text color="danger" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+        Senha deve ter no mínimo 6 caracteres
+      </ion-text>
+
+      <ion-item>
+        <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="confirmPassword" placeholder="Confirmar senha" autocomplete="new-password"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched">
+        Senhas não coincidem
+      </ion-text>
+
+      <div class="captcha-box" [attr.checked]="captchaToken ? true : null" (click)="validarCaptcha()">
+        <ion-checkbox [checked]="captchaToken"></ion-checkbox>
+        <label>Não sou um robô</label>
+      </div>
+
+      <ion-button expand="block" type="submit" class="btn-register" [disabled]="!registerForm.valid || !captchaToken">
+        Continuar
+      </ion-button>
+    </form>
+  </div>
+
+</ion-content>
